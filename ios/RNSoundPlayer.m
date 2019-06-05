@@ -27,6 +27,21 @@ RCT_EXPORT_METHOD(playUrl:(NSString *)url) {
     [self.avPlayer play];
 }
 
+RCT_EXPORT_METHOD(playData:(NSString *)base64String) {
+    if (self.player) {
+        self.player = nil;
+    }
+    NSData *data = [[NSData alloc] initWithBase64EncodedString:url options:0];
+    self.player = [[AVAudioPlayer alloc] initWithData:data error:nil];
+    
+    [self sendEventWithName:EVENT_FINISHED_LOADING body:@{@"success": [NSNumber numberWithBool:true]}];
+    [self sendEventWithName:EVENT_FINISHED_LOADING_URL body: @{@"success": [NSNumber numberWithBool:true], @"url": url}];
+    
+    [self.player setDelegate:self];
+    
+    [self.player play];
+}
+
 RCT_EXPORT_METHOD(playSoundFile:(NSString *)name ofType:(NSString *)type) {
     [self mountSoundFile:name ofType:type];
     [self.player play];
