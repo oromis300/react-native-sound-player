@@ -16,6 +16,10 @@ module.exports = {
     RNSoundPlayer.playSoundFile(name, type)
   },
 
+  playData: (base64String: string) => {
+    RNSoundPlayer.playData(base64String)
+  },
+
   playUrl: (url: string) => {
     RNSoundPlayer.playUrl(url)
   },

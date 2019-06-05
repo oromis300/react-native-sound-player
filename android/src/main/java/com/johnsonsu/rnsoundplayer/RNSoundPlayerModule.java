@@ -81,6 +81,11 @@ public class RNSoundPlayerModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void playData(String base64String) throws IOException {
+    this.playUrl(base64String);
+  }
+
+  @ReactMethod
   public void pause() throws IllegalStateException {
     if (this.mediaPlayer != null) {
       this.mediaPlayer.pause();
