@@ -31,7 +31,7 @@ RCT_EXPORT_METHOD(playData:(NSString *)base64String) {
     if (self.player) {
         self.player = nil;
     }
-    NSData *data = [[NSData alloc] initWithBase64EncodedString:url options:0];
+    NSData *data = [[NSData alloc] initWithBase64EncodedString:base64String options:0];
     self.player = [[AVAudioPlayer alloc] initWithData:data error:nil];
     
     [self sendEventWithName:EVENT_FINISHED_LOADING body:@{@"success": [NSNumber numberWithBool:true]}];
