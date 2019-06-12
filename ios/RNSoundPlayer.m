@@ -31,15 +31,19 @@ RCT_EXPORT_METHOD(playData:(NSString *)base64String) {
     if (self.player) {
         self.player = nil;
     }
-    NSData *data = [[NSData alloc] initWithBase64EncodedString:base64String options:0];
-    self.player = [[AVAudioPlayer alloc] initWithData:data error:nil];
-    
-    [self sendEventWithName:EVENT_FINISHED_LOADING body:@{@"success": [NSNumber numberWithBool:true]}];
-    [self sendEventWithName:EVENT_FINISHED_LOADING_URL body: @{@"success": [NSNumber numberWithBool:true], @"url": url}];
-    
-    [self.player setDelegate:self];
-    
-    [self.player play];
+    if (base64String != nil) {
+        NSData *data = [[NSData alloc] initWithBase64EncodedString:base64String options:0];
+        if (data != nil) {
+            self.player = [[AVAudioPlayer alloc] initWithData:data error:nil];
+            
+            [self sendEventWithName:EVENT_FINISHED_LOADING body:@{@"success": [NSNumber numberWithBool:true]}];
+            [self sendEventWithName:EVENT_FINISHED_LOADING_URL body: @{@"success": [NSNumber numberWithBool:true], @"url": base64String}];
+            
+            [self.player setDelegate:self];
+            
+            [self.player play];
+        }
+    }
 }
 
 RCT_EXPORT_METHOD(playSoundFile:(NSString *)name ofType:(NSString *)type) {
