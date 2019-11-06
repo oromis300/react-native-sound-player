@@ -70,7 +70,11 @@ public class RNSoundPlayerModule extends ReactContextBaseJavaModule {
 	  if (getCurrentActivity() != null) {
 		this.mediaPlayer.setDataSource(getCurrentActivity(), uri);
 	  }
-      this.mediaPlayer.prepare();
+      try {
+        this.mediaPlayer.prepare();
+      } catch (Exception e) {
+
+      }
     }
     WritableMap params = Arguments.createMap();
     params.putBoolean("success", true);
@@ -79,7 +83,11 @@ public class RNSoundPlayerModule extends ReactContextBaseJavaModule {
     onFinshedLoadingURLParams.putBoolean("success", true);
     onFinshedLoadingURLParams.putString("url", url);
     sendEvent(getReactApplicationContext(), EVENT_FINISHED_LOADING_URL, onFinshedLoadingURLParams);
-    this.mediaPlayer.start();
+    try {
+      this.mediaPlayer.start();
+    } catch (Exception e) {
+
+    }
   }
 
   @ReactMethod
